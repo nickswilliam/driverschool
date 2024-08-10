@@ -5,7 +5,7 @@ import { Refetch } from "../Refetch/Refetch";
 
 export const fetchCourseList = async (id: string) => {
   const res = await fetch(
-    `https://driver-school.vercel.app/api/prices/list/${id}`,
+    `https://driverschool-two.vercel.app/api/prices/list/${id}`,
     { cache: "no-store" }
   );
 

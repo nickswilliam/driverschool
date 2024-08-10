@@ -78,7 +78,7 @@ const AppointForm = () => {
         setLoading(true);
 
         const res = await fetch(
-          "https://driver-school.vercel.app/api/prices/list",
+          "https://driverschool-two.vercel.app/api/prices/list",
           {
             cache: "no-store",
           }

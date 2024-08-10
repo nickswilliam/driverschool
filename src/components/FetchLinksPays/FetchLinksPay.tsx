@@ -4,7 +4,7 @@ import LinksToPay from "../LinksToPay/LinksToPay";
 
 const fetchCoursesList = async () => {
   const res = await fetch(
-    "https://driver-school.vercel.app/api/prices/list/2",
+    "https://driverschool-two.vercel.app/api/prices/list/2",
     {
       cache: "no-store",
     }
