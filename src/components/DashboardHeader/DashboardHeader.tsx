@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { LuPanelLeftOpen } from "react-icons/lu";
 import { NotificationIcon } from "../NotificationIcon/NotificationIcon";
@@ -13,8 +13,25 @@ import { emailsUrl } from "@/data/fetchLinks";
 export const DashboardHeader = () => {
   const [toggleNotifications, setToggleNotifications] = useState(false);
   const [toggleLogout, setToggleLogout] = useState(false);
-  
-  const emailList = FetchEmailsClient(emailsUrl)
+
+  const logoutRef = useRef<HTMLDivElement | null>(null);
+  const notificationsRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOutSide = (event: MouseEvent) => {
+    if (
+      notificationsRef.current &&
+      !notificationsRef.current.contains(event.target as Node)
+    ) {
+      setToggleNotifications(false);
+    }
+
+    if(logoutRef.current && !logoutRef.current.contains(event.target as Node)){
+      setToggleLogout(false)
+    }
+  };
+
+
+  const emailList = FetchEmailsClient(emailsUrl);
 
   const handleNotifications = () => {
     if (toggleLogout) setToggleLogout((prev) => !prev);
@@ -27,8 +44,20 @@ export const DashboardHeader = () => {
     setToggleLogout((prev) => !prev);
   };
 
-  const mailsFilter = emailList?.filter(item=> !item.isReaded && !item.isTrash)
+  const mailsFilter = emailList?.filter((item) => !item.isReaded);
 
+  useEffect(() => {
+    if (toggleNotifications || toggleLogout) {
+      document.addEventListener("mousedown", handleClickOutSide);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutSide);
+
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutSide);
+    };
+  }, [toggleNotifications, toggleLogout]);
 
   return (
     <header className="z-20 px-5 sm:px-10 py-6 flex w-full h-16 bg-slate-100 items-center justify-between shadow-md border-b md:border-none relative">
@@ -45,21 +74,16 @@ export const DashboardHeader = () => {
               handleNotifications={handleNotifications}
             />
 
-            {toggleNotifications && <NotificationItems />}
+            {toggleNotifications && (
+              <NotificationItems notificationsRef={notificationsRef} />
+            )}
           </li>
 
           <li className="cursor-pointer ">
             <AvatarIcon handleLogout={handleLogout} />
-            {toggleLogout && <LogoutModal />}
+            {toggleLogout && <LogoutModal logoutRef={logoutRef} />}
           </li>
         </ul>
-
-        {toggleNotifications && (
-          <div
-            className="z-30 absolute top-0 left-0 w-full h-screen bg-transparent"
-            onClick={handleNotifications}
-          ></div>
-        )}
       </nav>
     </header>
   );
