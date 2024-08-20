@@ -1,16 +1,14 @@
 "use client";
-import { useState } from "react";
 import { IoIosNotifications } from "react-icons/io";
-import { NotificationItems } from "../NotificationItems/NotificationItems";
 
 interface QuantityType {
   quantityNotif: number;
-  handleNotifications: () => void;
+  
 }
 
-export const NotificationIcon = ({ quantityNotif, handleNotifications }: QuantityType) => {
+export const NotificationIcon = ({ quantityNotif }: QuantityType) => {
   return (
-    <div className="mt-1 relative cursor-pointer" onClick={handleNotifications}>
+    <div className="mt-1 relative cursor-pointer">
       <IoIosNotifications
         size={30}
         className="text-cyan-700 hover:text-cyan-800 transition-colors duration-100 relative z-10"

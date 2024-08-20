@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { LuPanelLeftOpen } from "react-icons/lu";
 import { NotificationIcon } from "../NotificationIcon/NotificationIcon";
@@ -17,47 +17,19 @@ export const DashboardHeader = () => {
   const logoutRef = useRef<HTMLDivElement | null>(null);
   const notificationsRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClickOutSide = (event: MouseEvent) => {
-    if (
-      notificationsRef.current &&
-      !notificationsRef.current.contains(event.target as Node)
-    ) {
-      setToggleNotifications(false);
-    }
-
-    if(logoutRef.current && !logoutRef.current.contains(event.target as Node)){
-      setToggleLogout(false)
-    }
-  };
-
-
   const emailList = FetchEmailsClient(emailsUrl);
 
   const handleNotifications = () => {
-    if (toggleLogout) setToggleLogout((prev) => !prev);
-
+    if (toggleLogout) setToggleLogout(false);
     setToggleNotifications((prev) => !prev);
   };
 
   const handleLogout = () => {
-    if (toggleNotifications) setToggleNotifications((prev) => !prev);
+    if (toggleNotifications) setToggleNotifications(false);
     setToggleLogout((prev) => !prev);
   };
 
   const mailsFilter = emailList?.filter((item) => !item.isReaded);
-
-  useEffect(() => {
-    if (toggleNotifications || toggleLogout) {
-      document.addEventListener("mousedown", handleClickOutSide);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutSide);
-
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutSide);
-    };
-  }, [toggleNotifications, toggleLogout]);
 
   return (
     <header className="z-20 px-5 sm:px-10 py-6 flex w-full h-16 bg-slate-100 items-center justify-between shadow-md border-b md:border-none relative">
@@ -68,19 +40,16 @@ export const DashboardHeader = () => {
       {/* nav links - logout & notifications */}
       <nav>
         <ul className="flex gap-10 items-center">
-          <li>
-            <NotificationIcon
-              quantityNotif={mailsFilter?.length || 0}
-              handleNotifications={handleNotifications}
-            />
+          <li onClick={handleNotifications}>
+            <NotificationIcon quantityNotif={mailsFilter?.length || 0} />
 
             {toggleNotifications && (
               <NotificationItems notificationsRef={notificationsRef} />
             )}
           </li>
 
-          <li className="cursor-pointer ">
-            <AvatarIcon handleLogout={handleLogout} />
+          <li className="cursor-pointer" onClick={handleLogout}>
+            <AvatarIcon />
             {toggleLogout && <LogoutModal logoutRef={logoutRef} />}
           </li>
         </ul>

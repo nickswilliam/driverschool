@@ -4,14 +4,12 @@ import Email from "@/models/Emails";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-//delete email
-export async function PATCH(
+//mark mail as readed or unreaded
+export async function DELETE(
   req: NextRequest,
   { params }: { params: { _id: string } }
 ) {
   const { _id } = params;
-
-  const { isTrash } = await req.json();
   try {
     await connectDB();
 
@@ -24,25 +22,16 @@ export async function PATCH(
       );
     }
 
-    if(session.user.role === "user"){
-        return NextResponse.json({message: "No tienes los permisos para eliminar el correo."}, {status: 401})
+    if (session.user.role === "user") {
+      return NextResponse.json(
+        { message: "No tienes los permisos para eliminar el correo." },
+        { status: 401 }
+      );
     }
 
-    if (!isTrash) {
-      const trashTrue = await Email.findByIdAndUpdate(
-        _id,
-        { isTrash: true },
-        { new: true }
-      );
-      return NextResponse.json(trashTrue, { status: 201 });
-    } else {
-      const trashFalse = await Email.findByIdAndUpdate(
-        _id,
-        { isTrash: false },
-        { new: true }
-      );
-      return NextResponse.json(trashFalse, { status: 201 });
-    }
+    const deletePermanent = await Email.findByIdAndDelete(_id);
+
+    return NextResponse.json(deletePermanent, { status: 203 });
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }

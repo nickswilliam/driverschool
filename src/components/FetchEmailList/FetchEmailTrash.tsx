@@ -1,9 +1,8 @@
 import React from "react";
 import { cookies } from "next/headers";
 import { IEmailData } from "../NotificationItems/NotificationItems";
-import { translateSection } from "@/utils/translate-section";
 import { formatDate } from "@/utils/format-date";
-import { emailsUrl } from "@/data/fetchLinks";
+import { TrashEmailCard } from "./TrashEmailCard/TrashEmailCard";
 
 export const fetchEmails = async (cookies: string, url: string) => {
   const response = await fetch(url, {
@@ -37,18 +36,7 @@ export const FetchEmailTrash = async ({url}: {url: string}) => {
         <span>No hay emails en la papelera</span>
       ) : (
         emails.map((item) => (
-          <div
-            className="w-full flex flex-col gap-6 px-6"
-            key={item._id as any}
-          >
-            <div
-              className={`cursor-pointer flex items-center gap-6 py-2 px-4 bg-slate-100 rounded-md shadow-sm mb-[6px] hover:shadow-lg transition-colors duration-150`}
-            >
-              <h3>{item.name}</h3>
-              <span>Email: {item.email}</span>
-              <span>Fecha: {formatDate(item.updatedAt)}</span>
-            </div>
-          </div>
+          <TrashEmailCard key={item._id} {...item}/>
         ))
       )}
     </div>
