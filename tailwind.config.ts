@@ -74,7 +74,7 @@ const config = {
       },
       backgroundImage: {
         "hero-img":
-          "url('https://res.cloudinary.com/dymyb2f2i/image/upload/v1723322797/driving-school/z0kv0sst10cdmosaro3h.png')",
+          "url('https://res.cloudinary.com/dymyb2f2i/image/upload/v1724438687/driving-school/rvixis8vdbv59e9ar5wu.png')",
         "hero-courses":
           "url('https://res.cloudinary.com/dymyb2f2i/image/upload/v1708050851/driving-school/dyvw5msgnwu9j6kei22i.jpg')",
       },
