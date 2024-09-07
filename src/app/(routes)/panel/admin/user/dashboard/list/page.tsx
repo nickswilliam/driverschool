@@ -1,7 +1,6 @@
-import { AllowOrNotToEdit } from "@/components/AllowOrNotToEdit/AllowOrNotToEdit";
 import { Metadata } from "next";
 import React, { Suspense } from "react";
-import { CiCircleInfo } from "react-icons/ci";
+
 import Loading from "./loading";
 import {FetchListPrices} from "@/components/FetchListPrices/FetchListPrices";
 
