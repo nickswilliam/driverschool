@@ -50,7 +50,7 @@ export const TrashActions = ({ _id }: ITrashActions) => {
 
   return (
     <div
-      className="flex items-center gap-3 rounded-md border shadow-sm py-2 px-4"
+      className="flex items-center gap-3 rounded-md border shadow-sm py-2 px-2 bg-cyan-400"
       title="Eliminar elemento"
     >
 

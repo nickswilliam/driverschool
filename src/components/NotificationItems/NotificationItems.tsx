@@ -4,6 +4,7 @@ import { MutableRefObject, useRef } from "react";
 export interface IEmailData extends IEmail {
   _id: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 interface INotificationsRef {

@@ -44,7 +44,7 @@ export const InboxActions = ({ isReaded, _id, isTrash }: IInboxActions) => {
   };
   return (
     <div
-      className="flex items-center gap-3 rounded-md border shadow-sm py-2 px-4"
+      className="flex items-center gap-3 rounded-md border shadow-sm py-2 px-2 bg-cyan-400"
       title={`${isReaded ? "Marcar como no leido" : "Marcar como leído"}`}
     >
       <button className="flex items-center" onClick={setReadAndUnread}>

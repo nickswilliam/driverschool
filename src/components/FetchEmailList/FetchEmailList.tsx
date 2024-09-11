@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { IEmailData } from "../NotificationItems/NotificationItems";
 import { InboxEmailCard } from "./InboxEmailCard/InboxEmailCard";
 import { NoEmailsIncoming } from "./NoEmailsIncoming/NoEmailsIncoming";
+import { Refetch } from "../Refetch/Refetch";
 
 export const fetchEmails = async (cookies: string, url: string) => {
   const response = await fetch(url, {

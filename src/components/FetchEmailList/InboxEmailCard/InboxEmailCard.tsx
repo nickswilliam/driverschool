@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { InboxActions } from "./InboxActions";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export const InboxEmailCard = ({
   isReaded,
@@ -21,6 +22,8 @@ export const InboxEmailCard = ({
 
   const openMail = () => {
     router.push(`/panel/admin/user/dashboard/mails/${_id}`);
+    axios.patch(`/api/emails/readed/${_id}`, {isReaded})
+
   };
   return (
     <div className="w-full flex flex-col gap-6">
