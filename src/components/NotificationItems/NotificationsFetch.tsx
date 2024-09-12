@@ -32,6 +32,7 @@ export const NotificationsFetch = () => {
             phone={item.phone}
             section={item.section}
             createdAt={item.createdAt}
+            updatedAt={item.updatedAt}
           />
         ))
       )}
