@@ -22,6 +22,7 @@ export const InboxEmailCard = ({
 
   const openMail = () => {
     router.push(`/panel/admin/user/dashboard/mails/${_id}`);
+    router.refresh()
     axios.patch(`/api/emails/readed/${_id}`, {isReaded})
 
   };
