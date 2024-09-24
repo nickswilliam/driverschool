@@ -1,7 +1,6 @@
 import { Refetch } from "@/components/Refetch/Refetch";
 import React, { Suspense } from "react";
 import LoadingEmails from "../loading";
-import { FetchEmailList } from "@/components/FetchEmailList/FetchEmailList";
 import { trashEmailsUrl } from "@/data/fetchLinks";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";

@@ -29,7 +29,7 @@ export const TrashEmailCard = ({
           Seccion: {translateSection(section)}
         </span>
         <span title={formatDate(updatedAt)}>
-          Recibido: {formatDate(updatedAt)}
+          Eliminado: {formatDate(updatedAt)}
         </span>
 
         </div>
