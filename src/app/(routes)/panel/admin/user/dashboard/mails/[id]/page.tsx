@@ -29,7 +29,7 @@ export const fetchEmailId = async (cookies: string, url: string) => {
   return data;
 };
 
-async function EmailID({ params }: { params: { id: string } }) {
+export default async function EmailID({ params }: { params: { id: string } }) {
   const id = params.id;
   const cookiesHeader = cookies().toString();
   const emailId: IEmailActions = await fetchEmailId(
@@ -64,5 +64,3 @@ async function EmailID({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
-export default EmailID;
