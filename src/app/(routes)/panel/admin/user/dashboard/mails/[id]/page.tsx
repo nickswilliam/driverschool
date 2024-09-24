@@ -5,29 +5,13 @@ import { emailsUrl } from "@/data/fetchLinks";
 import { IEmail } from "@/models/Emails";
 import { translateSection } from "@/utils/translate-section";
 import { cookies } from "next/headers";
+import { fetchEmails as fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
 
 export interface IEmailActions extends IEmail {
   _id: string;
   createdAt: string;
 }
 
-export const fetchEmailId = async (cookies: string, url: string) => {
-  const response = await fetch(url, {
-    credentials: "include",
-    headers: {
-      Cookie: cookies,
-    },
-    method: "GET",
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failing to fetch data");
-  }
-
-  const data = await response.json();
-  return data;
-};
 
 async function EmailID({ params }: { params: { id: string } }) {
   const id = params.id;
