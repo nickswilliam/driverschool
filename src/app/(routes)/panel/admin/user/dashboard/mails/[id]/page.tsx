@@ -13,7 +13,7 @@ export interface IEmailActions extends IEmail {
 }
 
 
-async function EmailID({ params }: { params: { id: string } }) {
+const EmailId = async({ params }: { params: { id: string } }) => {
   const id = params.id;
   const cookiesHeader = cookies().toString();
   const emailId: IEmailActions = await fetchEmailId(
@@ -49,4 +49,4 @@ async function EmailID({ params }: { params: { id: string } }) {
   );
 }
 
-export default EmailID;
+export default EmailId;
