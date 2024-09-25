@@ -1,5 +1,5 @@
 import { IEmailActions } from "@/app/(routes)/panel/admin/user/dashboard/mails/[id]/page";
-import { formatDate } from "@/utils/format-date";
+import { formatTimeDifference } from "@/utils/timeDiff";
 import { FaCircleUser, FaReply } from "react-icons/fa6";
 
 export const EmailIdHeader = ({
@@ -9,13 +9,13 @@ export const EmailIdHeader = ({
   createdAt,
 }: IEmailActions) => {
   return (
-    <div className="flex justify-between w-full px-2 py-4 border-b border-slate-400">
-      <div className="flex items-center gap-4">
-        <FaCircleUser size={40} />
+    <div className="flex justify-between w-full px-2 py-4 border-b border-slate-400 text-ellipsis">
+      <div className="flex items-center gap-4 text-ellipsis whitespace-nowrap overflow-hidden">
+        <FaCircleUser size={40} className="grow" />
 
         {/* email emisor data */}
-        <div className="flex flex-col gap-1">
-          <div className="flex gap-1 text-sm">
+        <div className="flex flex-col gap-1 ">
+          <div className="flex gap-1 text-sm text-ellipsis whitespace-nowrap overflow-hidden">
             <span className="font-bold">{name}</span>
             <span className="text-slate-500">{`<${email}>`}</span>
           </div>
@@ -24,8 +24,10 @@ export const EmailIdHeader = ({
         </div>
       </div>
 
-      <div className="flex gap-6 items-center">
-        <span className="text-sm">{formatDate(createdAt)}</span>
+
+    {/* time ago & reply button */}
+      <div className="flex gap-6 items-center whitespace-nowrap">
+        <span className="text-sm">{formatTimeDifference(createdAt)}</span>
 
         <button title="Responder mail">
             <FaReply/>
