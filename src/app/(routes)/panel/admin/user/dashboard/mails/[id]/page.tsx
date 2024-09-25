@@ -18,8 +18,8 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
   const urlFetch = `${emailsUrl}/${id}`;
   const emailId: IEmailActions = await fetchEmailId(cookiesHeader, urlFetch);
   return (
-    <div className="w-full h-max">
-      <div className="mt-4 mx-6 px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md">
+    <section className="w-full h-screen py-8 px-6">
+      <div className="px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md">
         {/* Email actions */}
         <EmailIdActions {...emailId} />
         {/* Section received */}
@@ -56,7 +56,7 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
           {emailId.isReaded ? "Leído" : "Sin leer"}
         </pre>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 export default async function MailsDashboardPage() {
   return (
     <section className="h-screen flex flex-col w-full py-8 px-6">
-        <h2 className="text-cyan-700 border-b">Bandeja de entrada</h2>
       <div className="mb-4 pl-4 pr-6 py-3 rounded-md shadow-md bg-slate-100 flex items-center justify-between">
+        <h2 className="text-cyan-700 border-b">Bandeja de entrada</h2>
         <Refetch/>
       </div>
 
