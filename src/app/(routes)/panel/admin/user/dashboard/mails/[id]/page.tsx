@@ -19,7 +19,7 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
   const emailId: IEmailActions = await fetchEmailId(cookiesHeader, urlFetch);
   return (
     <section className="w-full h-screen py-8 px-6">
-      <div className="px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md">
+      <div className={`px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md ${emailId.isReaded? 'shadow-black/40' : 'shadow-cyan-500'}`}>
         {/* Email actions */}
         <EmailIdActions {...emailId} />
         {/* Section received */}
