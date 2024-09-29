@@ -1,10 +1,10 @@
 "use client";
 import { IEmailData } from "@/components/NotificationItems/NotificationItems";
-import { formatDate } from "@/utils/format-date";
 import { translateSection } from "@/utils/translate-section";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { TrashActions } from "./TrashActions";
+import { formatTimeDifference } from "@/utils/timeDiff";
 
 export const TrashEmailCard = ({
   email,
@@ -28,8 +28,8 @@ export const TrashEmailCard = ({
         <span title={translateSection(section)}>
           Seccion: {translateSection(section)}
         </span>
-        <span title={formatDate(updatedAt)}>
-          Eliminado: {formatDate(updatedAt)}
+        <span title={formatTimeDifference(updatedAt)}>
+          Eliminado: {formatTimeDifference(updatedAt)}
         </span>
 
         </div>

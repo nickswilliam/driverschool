@@ -1,12 +1,12 @@
 "use client";
 import { IEmailData } from "@/components/NotificationItems/NotificationItems";
-import { formatDate } from "@/utils/format-date";
 import { translateSection } from "@/utils/translate-section";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { InboxActions } from "./InboxActions";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { formatTimeDifference } from "@/utils/timeDiff";
 
 export const InboxEmailCard = ({
   isReaded,
@@ -54,8 +54,8 @@ export const InboxEmailCard = ({
           >
             Seccion: {translateSection(section)}
           </span>
-          <span title={formatDate(createdAt)} className="text-xs">
-            {formatDate(createdAt)}
+          <span title={formatTimeDifference(createdAt)} className="text-xs">
+            {formatTimeDifference(createdAt)}
           </span>
         </div>
         {isChecked && (

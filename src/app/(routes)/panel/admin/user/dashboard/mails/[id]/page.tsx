@@ -5,7 +5,10 @@ import { emailsUrl } from "@/data/fetchLinks";
 import { IEmail } from "@/models/Emails";
 import { translateSection } from "@/utils/translate-section";
 import { cookies } from "next/headers";
-import { fetchEmails as fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
+import { fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
+import { redirect } from "next/navigation";
+import { EmailIdInvalid } from "@/components/EmailIdActions/EmailIdInvalid";
+import ReplyEmail from "@/components/ReplyEmail/ReplyEmail";
 
 export interface IEmailActions extends IEmail {
   _id: string;
@@ -17,9 +20,22 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
   const cookiesHeader = cookies().toString();
   const urlFetch = `${emailsUrl}/${id}`;
   const emailId: IEmailActions = await fetchEmailId(cookiesHeader, urlFetch);
+
+  if (!emailId) {
+    return <EmailIdInvalid />;
+  }
+
+  if (emailId.isTrash) {
+    redirect("/panel/admin/user/dashboard/mails/trash");
+  }
+
   return (
     <section className="w-full h-screen py-8 px-6">
-      <div className={`px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md ${emailId.isReaded? 'shadow-black/40' : 'shadow-cyan-500'}`}>
+      <div
+        className={`px-6 py-4 flex flex-col gap-3 bg-slate-100 rounded-md shadow-md ${
+          emailId.isReaded ? "shadow-black/40" : "shadow-cyan-500"
+        }`}
+      >
         {/* Email actions */}
         <EmailIdActions {...emailId} />
         {/* Section received */}
@@ -56,6 +72,9 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
           {emailId.isReaded ? "Leído" : "Sin leer"}
         </pre>
       </div>
+
+      {/* Form to reply email */}
+      {emailId.isReply && <ReplyEmail {...emailId}/>}
     </section>
   );
 };

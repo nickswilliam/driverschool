@@ -23,7 +23,7 @@ export const fetchEmails = async (cookies: string, url: string) => {
 };
 
 interface IEmailDataTrash extends IEmailData {
-  updatedAt: string;
+  updatedAt: number;
 }
 
 export const FetchEmailTrash = async ({url}: {url: string}) => {

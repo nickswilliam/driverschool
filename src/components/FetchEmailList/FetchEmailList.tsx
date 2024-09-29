@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { IEmailData } from "../NotificationItems/NotificationItems";
 import { InboxEmailCard } from "./InboxEmailCard/InboxEmailCard";
 import { NoEmailsIncoming } from "./NoEmailsIncoming/NoEmailsIncoming";
-import { Refetch } from "../Refetch/Refetch";
 
 export const fetchEmails = async (cookies: string, url: string) => {
   const response = await fetch(url, {
@@ -16,6 +15,24 @@ export const fetchEmails = async (cookies: string, url: string) => {
 
   if (!response.ok) {
     throw new Error("Failing to fetch data");
+  }
+
+  const data = await response.json();
+  return data;
+};
+
+export const fetchEmailId = async (cookies: string, url: string) => {
+  const response = await fetch(url, {
+    credentials: "include",
+    headers: {
+      Cookie: cookies,
+    },
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    return null
   }
 
   const data = await response.json();

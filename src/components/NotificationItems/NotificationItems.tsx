@@ -1,10 +1,9 @@
 import { IEmail } from "@/models/Emails";
 import { NotificationsFetch } from "./NotificationsFetch";
-import { MutableRefObject, useRef } from "react";
 export interface IEmailData extends IEmail {
   _id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: number;
+  updatedAt: number;
 }
 
 interface INotificationsRef {
