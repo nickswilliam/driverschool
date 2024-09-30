@@ -1,4 +1,4 @@
-export const formatDate = (date: string) => {
+export const formatDate = (date: number): string => {
   const fecha = new Date(date);
 
   const months = [
