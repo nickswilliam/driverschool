@@ -1,6 +1,8 @@
 "use client";
 import { IEmailActions } from "@/app/(routes)/panel/admin/user/dashboard/mails/[id]/page";
+import useToggleReply from "@/state/mailReplyState";
 import { formatTimeDifference } from "@/utils/timeDiff";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -12,18 +14,29 @@ export const EmailIdHeader = ({
   _id,
   createdAt,
   isReaded,
-  isReply
+  isReply,
 }: IEmailActions) => {
   const { data: session } = useSession();
-
   const router = useRouter();
+  const { isReplyMail, toggleReply } = useToggleReply();
+  const toast = useToast();
 
-  const replyMail =async () => {
-    if(!isReaded){
+  const replyMail = async () => {
+    if (isReply) {
+      toast({
+        title: "Email ya respondido",
+        description: "El email ya fue respondido anteriormente",
+        duration: 4500,
+        status: "warning",
+        isClosable: true,
+      });
+      return;
+    }
+    toggleReply();
+    if (!isReaded) {
       await axios.patch(`/api/emails/readed/${_id}`, { isReaded });
     }
-    await axios.patch(`/api/emails/reply/${_id}`, { isReply });
-    router.refresh()
+    router.refresh();
   };
 
   return (

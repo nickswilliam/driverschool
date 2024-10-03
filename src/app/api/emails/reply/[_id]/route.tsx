@@ -1,6 +1,7 @@
 import connectDB from "@/database/config";
 import { authOptions } from "@/lib/auth-options";
 import Email from "@/models/Emails";
+import { transporter } from "@/utils/nodemailer";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +12,7 @@ export async function PATCH(
 ) {
   const { _id } = params;
 
-  const { isReply } = await req.json();
+  const { subject, email, textEmailArea } = await req.json();
   try {
     await connectDB();
 
@@ -24,25 +25,31 @@ export async function PATCH(
       );
     }
 
-    if(session.user.role === 'user'){
-        return NextResponse.json({message: 'No cuenta con los permisos para responder el mail'} , {status: 401})
+    if (session.user.role === "user") {
+      return NextResponse.json(
+        { message: "No cuenta con los permisos para responder el mail" },
+        { status: 401 }
+      );
     }
 
-    if (!isReply) {
-      const updateState = await Email.findByIdAndUpdate(
-        _id,
-        { isReply: true },
-        { new: true }
-      );
-      return NextResponse.json(updateState, { status: 201 });
-    } else {
-      const updateState = await Email.findByIdAndUpdate(
-        _id,
-        { isReply: false },
-        { new: true }
-      );
-      return NextResponse.json(updateState, { status: 201 });
-    }
+    await Email.findByIdAndUpdate(
+      _id,
+      { isReply: true, replyData: { subject, textEmailArea } },
+      { new: true }
+    );
+
+    const options = {
+      from: '"Motivando Conductoras" noreply@gmail.com',
+      to: email,
+      subject,
+      text: textEmailArea,
+    };
+
+    await transporter.sendMail(options);
+    return NextResponse.json(
+      { message: "Se envío la respuesta del mail" },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }

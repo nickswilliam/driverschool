@@ -3,6 +3,7 @@ import { NotificationItemCard } from "../NotificationItemCard/NotificationItemCa
 import { FetchEmailsClient } from "../FetchEmailsClient/FetchEmailsClient";
 import { emailsUrl } from "@/data/fetchLinks";
 import { NotificationsLoading } from "./NotificationsLoading";
+import React from "react";
 
 
 export interface IEmailData extends IEmail {

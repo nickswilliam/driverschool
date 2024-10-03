@@ -74,7 +74,7 @@ const EmailId = async ({ params }: { params: { id: string } }) => {
       </div>
 
       {/* Form to reply email */}
-      {emailId.isReply && <ReplyEmail {...emailId}/>}
+       <ReplyEmail {...emailId}/>
     </section>
   );
 };

@@ -24,6 +24,7 @@ import { translateSection } from "@/utils/translate-section";
 import { useSession } from "next-auth/react";
 import { FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import useToggleReply from "@/state/mailReplyState";
 
 const formSchema = z.object({
   subject: z
@@ -40,17 +41,13 @@ const formSchema = z.object({
 
 export const ReplyEmailForm = ({
   _id,
-  createdAt,
   email,
   emailData,
-  isReaded,
-  isReply,
-  isTrash,
   name,
   phone,
   section,
 }: IEmailActions) => {
-  const { data: session } = useSession();
+  const { toggleReply } = useToggleReply();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const toast = useToast();
@@ -90,15 +87,17 @@ export const ReplyEmailForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setLoading(true);
-      await axios.post("/api/contact", values);
+      await axios.patch(`/api/emails/reply/${_id}`, values);
       toast({
-        title: "Se ha enviado la información.",
-        description: "Nos contactaremos a la brevedad",
-        status: "success",
+        title: "Respuesta enviada.",
+        description: "Has respondido el mail con exito",
+        status: "info",
         duration: 3500,
         isClosable: true,
       });
       form.reset();
+      router.refresh();
+      toggleReply();
     } catch (error) {
       console.log(error);
       toast({
@@ -116,7 +115,7 @@ export const ReplyEmailForm = ({
   const discardReply = async () => {
     router.push(`/panel/admin/user/dashboard/mails/${_id}`);
     router.refresh();
-    await axios.patch(`/api/emails/reply/${_id}`, { isReply });
+    toggleReply();
   };
   return (
     <div className="bg-slate-100 rounded-md shadow-md px-4 py-2 w-full">
@@ -187,7 +186,12 @@ export const ReplyEmailForm = ({
               {loading ? <Spinner /> : "Enviar"}
             </Button>
 
-            <button className="" onClick={discardReply} title="Descartar" type="button">
+            <button
+              className=""
+              onClick={discardReply}
+              title="Descartar"
+              type="button"
+            >
               <FaTrash size={20} />
             </button>
           </div>

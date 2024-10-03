@@ -1,5 +1,10 @@
 import mongoose, { model, Schema, Types, Model } from "mongoose";
 
+export interface IReplyData {
+  subject: string;
+  textEmailArea: string;
+}
+
 export interface IEmailData {
   address?: string;
   availability?: string;
@@ -20,6 +25,7 @@ export interface IEmail {
   isTrash: boolean;
   isReply: boolean;
   emailData: IEmailData;
+  replyData?: IReplyData;
 }
 
 const EmailSchema = new Schema<IEmail>({
@@ -86,6 +92,16 @@ const EmailSchema = new Schema<IEmail>({
       required: false
     },
   },
+  replyData: {
+    subject: {
+      type: "String",
+      required: true
+    },
+    textEmailArea: {
+      type: "String",
+      required: true
+    }
+  }
 }, {timestamps: true});
 
 

@@ -1,7 +1,4 @@
 "use client";
-
-import Link from "next/link";
-
 import { IoMdArrowBack, IoMdMailUnread, IoMdMailOpen } from "react-icons/io";
 import { FaRegTrashAlt } from "react-icons/fa";
 import axios from "axios";
@@ -9,30 +6,31 @@ import { IEmailActions } from "@/app/(routes)/panel/admin/user/dashboard/mails/[
 import { useRouter } from "next/navigation";
 import { useToast } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import useToggleReply from "@/state/mailReplyState";
 
 export const EmailIdActions = ({
   isReaded,
   isTrash,
   _id,
-  isReply,
 }: IEmailActions) => {
   const { data: session } = useSession();
+  const {isReplyMail, toggleReply} = useToggleReply()
   const router = useRouter();
   const toast = useToast();
 
   const backToInbox = async () => {
     router.push("/panel/admin/user/dashboard/mails/");
     router.refresh();
-    if (isReply) {
-      await axios.patch(`/api/emails/reply/${_id}`, { isReply });
+    if (isReplyMail) {
+      toggleReply()
     }
   };
 
   const markAsReadOrUnread = async () => {
-    if (isReply) {
+    if (isReplyMail) {
       router.push(`/panel/admin/user/dashboard/mails/${_id}`);
       router.refresh();
-      await axios.patch(`/api/emails/reply/${_id}`, { isReply });
+      toggleReply()
     }
     await axios.patch(`/api/emails/readed/${_id}`, { isReaded });
     router.refresh();
