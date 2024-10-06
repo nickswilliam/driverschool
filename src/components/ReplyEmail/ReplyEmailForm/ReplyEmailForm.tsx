@@ -187,7 +187,8 @@ export const ReplyEmailForm = ({
             </Button>
 
             <button
-              className=""
+              disabled={loading}
+              className="hover:text-slate-900/90 transition-colors duration-100 disabled:text-gray-700/50 disabled:cursor-not-allowed"
               onClick={discardReply}
               title="Descartar"
               type="button"

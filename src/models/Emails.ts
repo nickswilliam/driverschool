@@ -1,8 +1,8 @@
-import mongoose, { model, Schema, Types, Model } from "mongoose";
+import mongoose, { model, Schema, Model } from "mongoose";
 
 export interface IReplyData {
-  subject: string;
-  textEmailArea: string;
+  subject?: string;
+  textEmailArea?: string;
 }
 
 export interface IEmailData {
@@ -14,10 +14,12 @@ export interface IEmailData {
   payways?: string;
   courseNumber?: string;
   course?: string;
+  replyData?: IReplyData;
 }
 
 export interface IEmail {
   section: "consult" | "contact" | "appoint";
+  replyData: IReplyData;
   email: string;
   name: string;
   phone: string;
@@ -25,86 +27,91 @@ export interface IEmail {
   isTrash: boolean;
   isReply: boolean;
   emailData: IEmailData;
-  replyData?: IReplyData;
 }
 
-const EmailSchema = new Schema<IEmail>({
-  section: {
-    type: "String",
-    required: true,
-  },
-  email: {
-    type: "String",
-    required: true,
-  },
-  name: {
-    type: "String",
-    required: true,
-  },
+const EmailSchema = new Schema<IEmail>(
+  {
+    section: {
+      type: "String",
+      required: true,
+    },
+    email: {
+      type: "String",
+      required: true,
+    },
+    name: {
+      type: "String",
+      required: true,
+    },
 
-  phone: {
-    type: "String",
-    required: true,
-  },
-  isReaded: {
-    type: "Boolean",
-    default: false,
-  },
-  isTrash: {
-    type: "Boolean",
-    default: false,
-  },
-  isReply: {
-    type: "Boolean",
-    default: false,
-  },
-  emailData: {
-    address: {
+    phone: {
       type: "String",
-      required: false
+      required: true,
     },
-    availability: {
-      type: "String",
-      required: false
+    isReaded: {
+      type: "Boolean",
+      default: false,
     },
-    city: {
-      type: "String",
-      required: false
+    isTrash: {
+      type: "Boolean",
+      default: false,
     },
-    coursePriceList: {
-      type: "String",
-      required: false
+    isReply: {
+      type: "Boolean",
+      default: false,
     },
-    inBetweenStreet: {
-      type: "String",
-      required: false
-    },
-    payways: {
-      type: "String",
-      required: false
-    },
-    courseNumber: {
-      type: "String",
-      required: false
-    },
-    course: {
-      type: "String",
-      required: false
-    },
-  },
-  replyData: {
-    subject: {
-      type: "String",
-      required: true
-    },
-    textEmailArea: {
-      type: "String",
-      required: true
-    }
-  }
-}, {timestamps: true});
 
+    emailData: {
+      address: {
+        type: "String",
+        required: false,
+      },
+      availability: {
+        type: "String",
+        required: false,
+      },
+      city: {
+        type: "String",
+        required: false,
+      },
+      coursePriceList: {
+        type: "String",
+        required: false,
+      },
+      inBetweenStreet: {
+        type: "String",
+        required: false,
+      },
+      payways: {
+        type: "String",
+        required: false,
+      },
+      courseNumber: {
+        type: "String",
+        required: false,
+      },
+      course: {
+        type: "String",
+        required: false,
+      },
+      replyData: {
+        subject: {
+          type: "String",
+          required: false,
+          default: "",
+        },
+        textEmailArea: {
+          type: "String",
+          required: false,
+          default: "",
+        },
+      },
+    },
+  },
+  { timestamps: true }
+);
 
-const Email: Model<IEmail> = mongoose.models.Email || model<IEmail>("Email", EmailSchema)
+const Email: Model<IEmail> =
+  mongoose.models.Email || model<IEmail>("Email", EmailSchema);
 
-export default Email
+export default Email;

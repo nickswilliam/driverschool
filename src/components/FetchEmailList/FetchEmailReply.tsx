@@ -1,9 +1,8 @@
-import React from "react";
 import { cookies } from "next/headers";
 import { IEmailData } from "../NotificationItems/NotificationItems";
-import { formatDate } from "@/utils/format-date";
-import { TrashEmailCard } from "./TrashEmailCard/TrashEmailCard";
-import { NoTrashEmailsIncoming } from "./NoEmailsIncoming/NoTrashEmailsIncoming";
+import { NoEmailsIncoming } from "./NoEmailsIncoming/NoEmailsIncoming";
+import { ReplyEmailCard } from "./ReplyEmailCard/ReplyEmailCard";
+import { IEmail, IReplyData } from "@/models/Emails";
 
 export const fetchEmails = async (cookies: string, url: string) => {
   const response = await fetch(url, {
@@ -23,21 +22,26 @@ export const fetchEmails = async (cookies: string, url: string) => {
   return data;
 };
 
-interface IEmailDataTrash extends IEmailData {
-  updatedAt: number;
+
+export interface IReplyEmail extends IEmail {
+  replyData: IReplyData,
+  createdAt: number,
+  updatedAt: number,
+  _id: string;
 }
 
-export const FetchEmailTrash = async ({url}: {url: string}) => {
+export const FetchEmailReply = async ({url}: {url: string}) => {
   const cookieHeader = cookies().toString();
-  const emails: IEmailDataTrash[] = await fetchEmails(cookieHeader, url);
+  const urlToReply = `${url}/reply`
+  const emails: IReplyEmail[] = await fetchEmails(cookieHeader, urlToReply);
 
   return (
     <div className="h-screen flex flex-col w-full">
       {!emails.length ? (
-        <NoTrashEmailsIncoming/>
+        <NoEmailsIncoming/>
       ) : (
         emails.map((item) => (
-          <TrashEmailCard key={item._id} {...item}/>
+          <ReplyEmailCard key={item._id} {...item}/>
         ))
       )}
     </div>

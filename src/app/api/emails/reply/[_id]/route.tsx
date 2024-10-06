@@ -34,7 +34,13 @@ export async function PATCH(
 
     await Email.findByIdAndUpdate(
       _id,
-      { isReply: true, replyData: { subject, textEmailArea } },
+      {
+        $set: {
+          'isReply': true,
+          "replyData.subject": subject,
+          "replyData.textEmailArea": textEmailArea,
+        },
+      },
       { new: true }
     );
 

@@ -40,16 +40,16 @@ export const DashboardHeader = () => {
       {/* nav links - logout & notifications */}
       <nav>
         <ul className="flex gap-10 items-center">
-          <li onClick={handleNotifications}>
-            <NotificationIcon quantityNotif={mailsFilter?.length || 0} />
+          <li>
+            <NotificationIcon quantityNotif={mailsFilter?.length || 0} handleNotifications={handleNotifications} />
 
             {toggleNotifications && (
               <NotificationItems notificationsRef={notificationsRef} />
             )}
           </li>
 
-          <li className="cursor-pointer" onClick={handleLogout}>
-            <AvatarIcon />
+          <li className="cursor-pointer">
+            <AvatarIcon handleLogout={handleLogout}/>
             {toggleLogout && <LogoutModal logoutRef={logoutRef} />}
           </li>
         </ul>
