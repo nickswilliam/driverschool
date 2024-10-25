@@ -14,12 +14,11 @@ export interface IEmailData {
   payways?: string;
   courseNumber?: string;
   course?: string;
-  replyData?: IReplyData;
+  
 }
 
 export interface IEmail {
   section: "consult" | "contact" | "appoint";
-  replyData: IReplyData;
   email: string;
   name: string;
   phone: string;
@@ -27,6 +26,7 @@ export interface IEmail {
   isTrash: boolean;
   isReply: boolean;
   emailData: IEmailData;
+  replyData: IReplyData;
 }
 
 const EmailSchema = new Schema<IEmail>(
@@ -59,6 +59,18 @@ const EmailSchema = new Schema<IEmail>(
     isReply: {
       type: "Boolean",
       default: false,
+    },
+    replyData: {
+      subject: {
+        type: "String",
+        required: false,
+        default: "",
+      },
+      textEmailArea: {
+        type: "String",
+        required: false,
+        default: "",
+      },
     },
 
     emailData: {
@@ -93,18 +105,6 @@ const EmailSchema = new Schema<IEmail>(
       course: {
         type: "String",
         required: false,
-      },
-      replyData: {
-        subject: {
-          type: "String",
-          required: false,
-          default: "",
-        },
-        textEmailArea: {
-          type: "String",
-          required: false,
-          default: "",
-        },
       },
     },
   },

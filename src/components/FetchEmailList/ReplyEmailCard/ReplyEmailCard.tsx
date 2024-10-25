@@ -1,24 +1,19 @@
 "use client";
-import { IEmailData } from "@/components/NotificationItems/NotificationItems";
-import { translateSection } from "@/utils/translate-section";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { ReplyActions } from "./ReplyActions";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { formatTimeDifference } from "@/utils/timeDiff";
 import { formatDate } from "@/utils/format-date";
 import { IReplyEmail } from "../FetchEmailReply";
 
 export const ReplyEmailCard = ({
   isReaded,
-  email,
-  section,
   createdAt,
   isTrash,
   _id,
-  replyData,
   name,
+  replyData
 }: IReplyEmail) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -33,7 +28,6 @@ export const ReplyEmailCard = ({
     }
   };
 
-  console.log(replyData);
   
 
   return (
@@ -62,6 +56,13 @@ export const ReplyEmailCard = ({
             className=""
           >
             {replyData?.subject}
+          </span>
+
+          <span
+            title={replyData?.textEmailArea}
+            className=""
+          >
+            {replyData?.textEmailArea?.slice(0, 10)}...
           </span>
 
           

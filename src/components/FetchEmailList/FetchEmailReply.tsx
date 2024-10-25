@@ -24,7 +24,6 @@ export const fetchEmails = async (cookies: string, url: string) => {
 
 
 export interface IReplyEmail extends IEmail {
-  replyData: IReplyData,
   createdAt: number,
   updatedAt: number,
   _id: string;
