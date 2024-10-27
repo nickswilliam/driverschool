@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, Types, ObjectId, Model } from "mongoose";
+import mongoose, { model, Schema, Types, Model } from "mongoose";
 
 export interface ICourseList {
     courseTitle: string,

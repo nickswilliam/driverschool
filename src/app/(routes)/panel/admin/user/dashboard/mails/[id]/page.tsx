@@ -13,6 +13,7 @@ import ReplyEmail from "@/components/ReplyEmail/ReplyEmail";
 export interface IEmailActions extends IEmail {
   _id: string;
   createdAt: number;
+  updatedAt: number;
 }
 
 const EmailId = async ({ params }: { params: { id: string } }) => {

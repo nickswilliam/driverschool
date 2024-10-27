@@ -2,17 +2,18 @@ import { EmailData } from "@/components/EmailIdActions/EmailData";
 import { EmailIdActions } from "@/components/EmailIdActions/EmailIdActions";
 import { emailsUrl } from "@/data/fetchLinks";
 import { IEmail } from "@/models/Emails";
-import { translateSection } from "@/utils/translate-section";
 import { cookies } from "next/headers";
 import { fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
 import { redirect } from "next/navigation";
 import { EmailIdInvalid } from "@/components/EmailIdActions/EmailIdInvalid";
 import ReplyEmail from "@/components/ReplyEmail/ReplyEmail";
 import { ReplyEmailIdHeader } from "@/components/EmailIdActions/ReplyEmailIdActions/ReplyEmailIdHeader";
+import { ReplyEmailSentMsj } from "@/components/EmailIdActions/ReplyEmailIdActions/ReplyEmailIdSentMsj";
 
 export interface IEmailActions extends IEmail {
   _id: string;
   createdAt: number;
+  updatedAt: number;
 }
 
 const ReplyMailId = async ({ params }: { params: { id: string } }) => {
@@ -38,22 +39,13 @@ const ReplyMailId = async ({ params }: { params: { id: string } }) => {
       >
         {/* Email actions */}
         <EmailIdActions {...emailId} />
-        {/* Section received */}
-        <div
-          className={`rounded py-1 px-2 w-fit text-white text-sm ${
-            emailId.section === "consult"
-              ? "bg-violet-600"
-              : emailId.section === "contact"
-              ? "bg-indigo-400"
-              : "bg-pink-600"
-          }`}
-        >
-          <span>{translateSection(emailId.section)}</span>
-        </div>
-        {/* Avatar mail icon - reply & more */}
+
+        {/* Avatar mail icon to inbox data - reply & more */}
         <ReplyEmailIdHeader {...emailId} />
 
-        {/* Email Data */}
+        {/*  */}
+
+        {/* Email inbox Data */}
         <div className="flex flex-col gap-2">
           <span>
             <strong>Nombre:</strong> {emailId.name}
@@ -68,13 +60,22 @@ const ReplyMailId = async ({ params }: { params: { id: string } }) => {
           <EmailData {...emailId.emailData} />
         </div>
 
+        <hr className="border-b border-gray-400" />
+
+        <ReplyEmailSentMsj {...emailId} />
+
+        {/* Email reply Data */}
+        <div className="flex flex-col gap-2">
+          <p>{emailId.replyData.textEmailArea}</p>
+        </div>
+
         <pre className="text-slate-400 self-end">
           {emailId.isReaded ? "Leído" : "Sin leer"}
         </pre>
       </div>
 
       {/* Form to reply email */}
-       <ReplyEmail {...emailId}/>
+      <ReplyEmail {...emailId} />
     </section>
   );
 };
