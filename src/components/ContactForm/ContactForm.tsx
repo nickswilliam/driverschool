@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useToast } from "@chakra-ui/react";
-import { coursesPrices } from "@/data/car-courses-prices";
 import {
   Form,
   FormControl,
