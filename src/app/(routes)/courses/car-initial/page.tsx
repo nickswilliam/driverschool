@@ -1,16 +1,17 @@
 import { FaCalendar, FaClock } from "react-icons/fa";
-import { coursesPrices } from "@/data/car-courses-prices";
-import CoursesCards from "@/components/CoursesCards/CoursesCards";
 import Image from "next/image";
 import { Metadata } from "next";
+import { FetchCoursePrices } from "@/components/FetchCoursePrices/FetchCoursePrices";
+import { Suspense } from "react";
+import { LoadingFetchCoursePrices } from "@/components/FetchCoursePrices/LoadingFetchCoursePrices";
 
 export const metadata: Metadata = {
   title: "Prácticas de Auto",
-  description: "Todos los niveles de práctica de manejo, horarios disponibles y precios vigentes."
+  description:
+    "Todos los niveles de práctica de manejo, horarios disponibles y precios vigentes.",
 };
 
 const CarInitial = () => {
-
   return (
     <section className="w-full flex flex-col gap-4 bg-violet-100 pb-12">
       {/* top title */}
@@ -114,12 +115,9 @@ const CarInitial = () => {
         Precios de los cursos
       </h2>
       {/* cards prices - container*/}
-      <div className="self-center mt-6 w-full max-w-7xl px-10 pt-10 pb-16 flex justify-center flex-wrap gap-4">
-        {/* Cards */}
-        {coursesPrices.map((value) => (
-          <CoursesCards {...value} key={value.price} />
-        ))}
-      </div>
+      <Suspense fallback={<LoadingFetchCoursePrices/>}>
+        <FetchCoursePrices />
+      </Suspense>
     </section>
   );
 };
