@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { useToast } from "@chakra-ui/react";
-import { coursesPrices } from "@/data/car-courses-prices";
 import {
   Form,
   FormControl,
@@ -17,10 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectFirst, SelectItem } from "../ui/custom-select";
 import { PHONE_REGEXP } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Spinner } from "@chakra-ui/react";
 
 import axios from "axios";
+import { ICoursesPrices } from "@/models/CoursesPrices";
 
 const formSchema = z.object({
   name: z
@@ -46,6 +46,27 @@ const formSchema = z.object({
 });
 
 export const ContactForm = () => {
+  const [coursesPrices, setCoursesPrices] = useState<ICoursesPrices[]>(
+    []
+  );
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const res = await fetch(
+        "https://driverschool-two.vercel.app/api/prices/",
+        { cache: "no-store" }
+      );
+
+      if(!res.ok){
+        throw new Error("Failing to fetch data")
+      }
+
+      const data = await res.json()
+
+      setCoursesPrices(data)
+    };
+
+    fetchCourses()
+  }, []);
   const [course, setCourse] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
