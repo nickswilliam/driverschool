@@ -52,7 +52,7 @@ export const ContactForm = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       const res = await fetch(
-        "https://driverschool-two.vercel.app/api/prices/",
+        "https://driverschool-two.vercel.app/api/prices",
         { cache: "no-store" }
       );
 
