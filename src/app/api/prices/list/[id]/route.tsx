@@ -1,4 +1,4 @@
-import { priceListSchema } from "@/schemas/validation";
+
 import connectDB from "@/database/config";
 import PriceList from "@/models/PriceList";
 import { getServerSession } from "next-auth";

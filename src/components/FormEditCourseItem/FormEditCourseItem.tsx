@@ -25,7 +25,6 @@ import axios from "axios";
 import { ICoursesPrices } from "@/models/CoursesPrices";
 
 const listItemsSchema = z.object({
-  id: z.number().min(1, { message: "Debe ingresar al menos 1 núumero de ID" }),
   item: z.string().min(4, "Debe ingresar al menos 4 caracteres"),
 });
 
@@ -38,7 +37,7 @@ const coursesPriceSchema = z.object({
       required_error: "El nombre de botón es requerido",
     })
     .min(4, { message: "Debe ingresar al menos 4 caracteres*" }),
-  price: z.number().min(3, "Debe ingresar al menos 3 digitos"),
+  price: z.string().min(3, "Debe ingresar al menos 3 digitos"),
   listItems: z.array(listItemsSchema),
   title: z
     .string({
@@ -64,7 +63,7 @@ export const FormEditCourseItem = ({
       btnText,
       id,
       listItems,
-      price,
+      price: price.toString(),
       title,
     },
   });
@@ -77,16 +76,15 @@ export const FormEditCourseItem = ({
   const onSubmit = async (values: z.infer<typeof coursesPriceSchema>) => {
     try {
       setLoading(true);
-      await axios.patch(`/api/prices/list/${id}`, values);
+      await axios.patch(`/api/prices/${id}`, values);
       toast({
-        title: "Se han actualizado los precios",
-        description: `M.P:`,
+        title: "Se ha actualizado info de curso",
         status: "success",
         duration: 4000,
         isClosable: true,
       });
 
-      router.push("/panel/admin/user/dashboard/list");
+      router.push("/panel/admin/user/dashboard/prices");
     } catch (error) {
       console.log(error);
       toast({
@@ -106,60 +104,106 @@ export const FormEditCourseItem = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full flex flex-col gap-6"
       >
+        <div className="w-full px-3 py-2 rounded-md grid grid-cols-1 md:grid-cols-2 gap-4 border shadow-md">
+        <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-cyan-600 font-semibold">
+                  Identificador:
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ingrese nombre identificador de curso*"
+                    {...field}
+                    className="text-md text-black border-b border-slate-700 shadow-none focus-visible:shadow-slate-500/30"
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-<FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-cyan-600 font-semibold">
-                Titulo de curso:
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Ingrese titulo de curso**"
-                  {...field}
-                  className="border-cyan-600 focus-visible:shadow-sm focus-visible:shadow-cyan-500 text-cyan-600"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-cyan-600 font-semibold">
+                  Titulo de curso:
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ingrese titulo de curso**"
+                    {...field}
+                    className="text-md text-black border-b border-slate-700 shadow-none focus-visible:shadow-slate-500/30"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-cyan-600 font-semibold">
+                  Precio:
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ingrese precio en $*"
+                    {...field}
+                    className="text-md text-black border-b border-slate-700 shadow-none focus-visible:shadow-slate-500/30"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="btnText"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-cyan-600 font-semibold">
+                  Texto de acción:
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ingrese texto botón/acción*"
+                    {...field}
+                    className="text-md text-black border-b border-slate-700 shadow-none focus-visible:shadow-slate-500/30"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormLabel className="text-cyan-700 text-md">
+          Características de curso:
+        </FormLabel>
 
         {fields.map((item, index) => (
           <div
             key={item.id}
-            className="w-full px-3 py-2 rounded-md grid grid-cols-1 md:grid-cols-2 gap-4 border shadow-md"
+            className="w-full px-3 py-2 rounded-md flex flex-col gap-4 border shadow-md"
           >
-            <Controller
-              name={`listItems.${index}.id`}
-              control={form.control}
-              render={({ field }) => (
-                <FormItem className="space-y-4">
-                  <FormLabel className="text-cyan-700 text-md">
-                    Identificador:
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled
-                      className="text-md text-black border-b border-slate-700 shadow-none bg-slate-400/20"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-orange-200" />
-                </FormItem>
-              )}
-            />
-
             <Controller
               name={`listItems.${index}.item`}
               control={form.control}
               render={({ field }) => (
                 <FormItem className="space-y-4">
                   <FormLabel className="text-cyan-700 text-md">
-                    Curso:
+                    Descripción: {index + 1}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -187,7 +231,7 @@ export const FormEditCourseItem = ({
             className="mt-4 mx-10 bg-slate-400 hover:bg-slate-400/90 disabled:bg-slate-400/90 rounded-full self-center"
             disabled={loading}
             type="button"
-            onClick={() => router.push("/panel/admin/user/dashboard/list/")}
+            onClick={() => router.push("/panel/admin/user/dashboard/prices/")}
           >
             {loading ? <Spinner /> : <IoCloseSharp />}
           </Button>
