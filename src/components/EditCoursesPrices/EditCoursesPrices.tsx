@@ -3,7 +3,7 @@ import { fetchCoursePrices } from "../FetchCourses/FetchCourses";
 import { ICoursesPrices } from "@/models/CoursesPrices";
 
 const fetchCoursesId = async (id: string) => {
-  
+
 };
 
 export const EditCoursesPrices = async ({

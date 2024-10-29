@@ -7,7 +7,7 @@ import { ObjectId } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 //traer los precios de curso x id
-export async function GET({ params }: { params: { id: string } }){
+export async function GET(req: NextRequest, { params }: { params: { id: string } }){
     const {id} = params
     await connectDB();
     try {
