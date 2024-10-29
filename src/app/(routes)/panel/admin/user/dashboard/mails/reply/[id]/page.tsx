@@ -73,9 +73,6 @@ const ReplyMailId = async ({ params }: { params: { id: string } }) => {
           {emailId.isReaded ? "Leído" : "Sin leer"}
         </pre>
       </div>
-
-      {/* Form to reply email */}
-      <ReplyEmail {...emailId} />
     </section>
   );
 };
