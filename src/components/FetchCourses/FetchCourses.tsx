@@ -1,4 +1,3 @@
-import { PriceCourses } from "@/types/types";
 import React from "react";
 import { FetchCoursesItem } from "./FetchCoursesItem";
 import { Refetch } from "../Refetch/Refetch";

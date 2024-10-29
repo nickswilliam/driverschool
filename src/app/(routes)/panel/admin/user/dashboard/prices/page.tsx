@@ -1,5 +1,6 @@
 import { FetchCourses } from '@/components/FetchCourses/FetchCourses'
 import React, { Suspense } from 'react'
+import Loading from './loading'
 
 function PricesDashboarPage() {
   return (
@@ -8,7 +9,7 @@ function PricesDashboarPage() {
         Listado de cursos 📝
       </h2>
 
-      <Suspense>
+      <Suspense fallback={<Loading/>}>
         <FetchCourses/>
       </Suspense>
     </div>

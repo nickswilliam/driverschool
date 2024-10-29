@@ -1,6 +1,8 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
+
+
 const Loading = () => {
   return (
     <div className="self-center w-full max-w-[100%] rounded-md bg-slate-100 px-6 py-4 lg:px-10 lg:py-8 shadow-md flex flex-col gap-4">

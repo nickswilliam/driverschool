@@ -1,19 +1,10 @@
 "use client";
 
 import { ICoursesPrices } from "@/models/CoursesPrices";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React from "react";
-import { MdEdit } from "react-icons/md";
 import { LabelAndInputCourses } from "../ui/label-input-courses";
 
 export const FetchCoursesItem = (data: ICoursesPrices) => {
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  const editItem = () => {
-    router.push(`/panel/admin/user/dashboard/prices/edit/${data.id}`);
-  };
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 border rounded-md py-2 px-3 shadow-md">
       <LabelAndInputCourses id={data.id} value={data.id} title="Identificador" type="number"/>
