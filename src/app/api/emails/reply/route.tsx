@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     }
     /* traer array de emails respondidos */
     //ordenados en orden descendente, desde el mas reciente hasta el menos reciente
-    const mails = await Email.find({isReply: true}).sort({ createdAt: -1 });
+    const mails = await Email.find({isReply: true, isTrash: false}).sort({ createdAt: -1 });
 
     return NextResponse.json(mails, {
       status: 200,
