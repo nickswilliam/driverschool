@@ -6,6 +6,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { ForbbidenAccess } from "@/components/ForbbidenAccess/ForbbidenAccess";
 import { FetchEmailTrash } from "@/components/FetchEmailList/FetchEmailTrash";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Papelera",
+};
+
 
 
 const TrashPage = async () => {

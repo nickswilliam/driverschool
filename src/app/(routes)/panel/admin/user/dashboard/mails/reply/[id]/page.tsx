@@ -1,14 +1,19 @@
 import { EmailData } from "@/components/EmailIdActions/EmailData";
-import { EmailIdActions } from "@/components/EmailIdActions/EmailIdActions";
 import { emailsUrl } from "@/data/fetchLinks";
 import { IEmail } from "@/models/Emails";
 import { cookies } from "next/headers";
 import { fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
 import { redirect } from "next/navigation";
 import { EmailIdInvalid } from "@/components/EmailIdActions/EmailIdInvalid";
-import ReplyEmail from "@/components/ReplyEmail/ReplyEmail";
 import { ReplyEmailIdHeader } from "@/components/EmailIdActions/ReplyEmailIdActions/ReplyEmailIdHeader";
 import { ReplyEmailSentMsj } from "@/components/EmailIdActions/ReplyEmailIdActions/ReplyEmailIdSentMsj";
+import { Metadata } from "next";
+import { ReplyEmailIdActions } from "@/components/EmailIdActions/ReplyEmailIdActions/ReplyEmailIdActions";
+
+export const metadata: Metadata = {
+  title: "Leer enviado",
+};
+
 
 export interface IEmailActions extends IEmail {
   _id: string;
@@ -38,7 +43,7 @@ const ReplyMailId = async ({ params }: { params: { id: string } }) => {
         }`}
       >
         {/* Email actions */}
-        <EmailIdActions {...emailId} />
+        <ReplyEmailIdActions {...emailId} />
 
         {/* Avatar mail icon to inbox data - reply & more */}
         <ReplyEmailIdHeader {...emailId} />

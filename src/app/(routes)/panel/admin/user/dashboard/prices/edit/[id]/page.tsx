@@ -5,6 +5,11 @@ import React from "react";
 import { RiUserForbidFill } from "react-icons/ri";
 import { TbArrowBackUp } from "react-icons/tb";
 import { EditCoursesPrices as EditCourses } from "@/components/EditCoursesPrices/EditCoursesPrices";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Editando | Cursos y Precios",
+};
 
 const EditCoursesPrices = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);

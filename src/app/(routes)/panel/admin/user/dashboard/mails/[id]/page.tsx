@@ -9,6 +9,12 @@ import { fetchEmailId } from "@/components/FetchEmailList/FetchEmailList";
 import { redirect } from "next/navigation";
 import { EmailIdInvalid } from "@/components/EmailIdActions/EmailIdInvalid";
 import ReplyEmail from "@/components/ReplyEmail/ReplyEmail";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Leer mail",
+};
+
 
 export interface IEmailActions extends IEmail {
   _id: string;

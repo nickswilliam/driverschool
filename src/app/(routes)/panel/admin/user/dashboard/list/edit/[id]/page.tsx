@@ -4,6 +4,13 @@ import { TbArrowBackUp } from "react-icons/tb";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Editando | Listas - Precios",
+};
+
+
 
 const EditList = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession(authOptions);
